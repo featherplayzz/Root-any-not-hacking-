@@ -232,6 +232,26 @@ def get_dynamic_prompt():
     display_path = "~" if cwd == ROOT_PATH else cwd.replace(ROOT_PATH, "~")
     return f"{USER}@{DEVICE}:{display_path}# "
 
+def run_command(full_command):
+    # Step 1: Try running the command normally
+    # We use capture_output to check for permission errors
+    proc = subprocess.run(full_command, shell=True, capture_output=True, text=True)
+    
+    # Define common permission error strings
+    errors = ["permission denied", "not permitted", "must be root", "are you root"]
+    
+    if any(e in proc.stderr.lower() for e in errors):
+        # Step 2: Permission denied? Try with sudo
+        sudo_proc = subprocess.run(f"sudo {full_command}", shell=True)
+        
+        # Step 3: If sudo also fails (return code not 0)
+        if sudo_proc.returncode != 0:
+            print(f"\033[31mThe Command {full_command} cannot be used, please contact support.\033[0m")
+    else:
+        # If no permission error, just show the result of the first try
+        if proc.stdout: print(proc.stdout.strip())
+        if proc.stderr: print(proc.stderr.strip())
+
 def main():
     setup_terminal()
     while True:
@@ -280,7 +300,7 @@ def main():
             elif cmd == "neofetch":
                 os.system(f"neofetch --hostname {DEVICE}")
             else:
-                os.system(raw_input)
+                run_command(raw_input)
                 
         except (KeyboardInterrupt, EOFError):
             print(f"\n{R}Interrupt: Session Terminated.{N}"); break
