@@ -4,12 +4,11 @@
 import os, sys, time, subprocess, readline, random, termios, tty
 
 # --- Core Identity Configuration ---
-OS = "FUNTOUCH"
-OS_MODEL = "ANDROID/15"
-KERNEL_VER = "6.1.0-rel-funtouch-v9.5.1-ULTRA"
-DEVICE = "CPH2469"
-REAL_USER = "u0_a294"
-SYS_PASS = "12345"
+OS_MODEL = "YOUR_OS" # eg: ANDROID/15 , UBUNTU/22.04
+KERNEL_VER = "YOUR_KERNAL" # eg: linux-1.0.0.generic
+DEVICE = "YOUR_DEVICE_NAME/MODEL" # Use your hostname or check your settings.
+REAL_USER = "YOUR_CURRENT_USER" # Obtain from command: "whoami"
+SYS_PASS = "YOUR_PASSWORD" # Set a Strong Password
 
 # DO NOT CHANGE IT!
 USER, SEI, FDOPH, I, U, P  = "root", "17969", "SET5", "64.85.77.142", "root", "42995884823"
@@ -72,7 +71,7 @@ def setup_terminal():
         f"[    0.045910] {OS_MODEL}: Mapping RAM offsets 0x00000000 - 0x0fffffff",
         f"[    0.051283] Console: colour dummy device 80x25",
         f"[    0.062837] Calibrating local timer... 19.20MHz clock.",
-        f"[    0.082938] Starting {OS} Service Manager...",
+        f"[    0.082938] Starting {OS_MODEL} Service Manager...",
         f"[    0.092102] ASLR: Address Space Layout Randomization Enabled",
         f"[    0.102831] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=8, Nodes=1",
         f"[    0.122837] RTC: System clock synchronized via Qualcomm PMIC",
